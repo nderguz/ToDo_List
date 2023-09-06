@@ -1,0 +1,21 @@
+body{
+    background-color:grey;
+}
+
+h1{
+    text-align: center;
+}
+
+.card-list{
+    background-color: green;;
+    width: 20rem;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 4px;
+}
+
+.task-name{
+
+    border-radius: 2px;
+    border-color: #4B5169;
+}
