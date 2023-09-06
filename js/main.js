@@ -1,14 +1,9 @@
-//const form = document.querySelector("#form");
 const addTask = document.querySelector(".create");
 const clearTasks = document.querySelector(".remove-all");
-
-
 const taskInput = document.querySelector("#taskInput");
 const tasksList = document.querySelector("#tasksList");
-const emptyList = document.querySelector("#emptyList");
 
 
-//form.addEventListener("submit", addNewTask)
 addTask.addEventListener("click", addNewTask);
 clearTasks.addEventListener("click", removeAll);
 tasksList.addEventListener("click", removeTask);
@@ -29,18 +24,18 @@ function addNewTask(event){
                 <button type="button" data-action="done" class="btn-action">
                  <img src="./img/tick.svg" alt="Done" width="18" height="18">
                 </button>
-                <button type="button" data-action="delete" class="btn-action">
+                <button type="button" data-action="failed" class="btn-action">
                     <img src="./img/cross.svg" alt="Done" width="18" height="18">
+                </button>
+                <button type="button" data-action="delete" class="btn-action">
+                    <img src="./img/trash.svg" alt="Done" width="18" height="18">
                 </button>
             </div>
         </li>
         `;
         tasksList.insertAdjacentHTML("beforeend", taskElement);
-        
-    
-
-
     if (tasksList.childElementCount > 1){
+        const emptyList = document.querySelector("#emptyList");
         emptyList.classList.add('none');
     }
     

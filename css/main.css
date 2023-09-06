@@ -54,6 +54,14 @@ body {
   color: #42BE2A;
   font-size: 32px;
 }
+.remove-all{
+  background-color: red;
+  border-color: red;
+}
+.remove-all:hover{
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
 .btn-action {
     background-color: #e0e5ea;
     padding: 8px 10px;
