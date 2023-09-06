@@ -66,8 +66,16 @@ function MarkDone(event){
 }
 //Удалить все задачи
 function removeAll(event){
+    event.preventDefault();
     if (event.target.className == 'btn btn-primary  btn-lg remove-all'){
-
-
+        let parentNode = document.querySelector('#tasksList');
+        const childNode = `<li id="emptyList" class="list-group-item empty-list">
+        <img src="./img/leaf.svg" alt="Empty" width="48" class="mt-3">
+        <div class="empty-list__title">Список дел пуст</div>
+        </li>`;
+        while(parentNode.firstChild){
+            parentNode.removeChild(parentNode.firstChild);
+        }
+        parentNode.insertAdjacentHTML("afterbegin", childNode);
     }
 }
