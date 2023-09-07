@@ -2,12 +2,14 @@ const addTask = document.querySelector(".create");
 const clearTasks = document.querySelector(".remove-all");
 const taskInput = document.querySelector("#taskInput");
 const tasksList = document.querySelector("#tasksList");
+const failedTask = document.querySelector("#tasksList");
 
 
 addTask.addEventListener("click", addNewTask);
 clearTasks.addEventListener("click", removeAll);
 tasksList.addEventListener("click", removeTask);
 tasksList.addEventListener("click", MarkDone);
+failedTask.addEventListener("click", failTask);
 
 //Добавить задачу
 function addNewTask(event){
@@ -20,15 +22,17 @@ function addNewTask(event){
     const taskElement = `
         <li class="list-group-item d-flex justify-content-between task-item">
             <span class="task-title">${taskName}</span>
+            <span class="task-priority high">Высокий приоритет</span>
+            <span class="mark-failed"></span>
             <div class="task-item__buttons">
                 <button type="button" data-action="done" class="btn-action">
                  <img src="./img/tick.svg" alt="Done" width="18" height="18">
                 </button>
                 <button type="button" data-action="failed" class="btn-action">
-                    <img src="./img/cross.svg" alt="Done" width="18" height="18">
+                    <img src="./img/cross.svg" alt="Failed" width="18" height="18">
                 </button>
                 <button type="button" data-action="delete" class="btn-action">
-                    <img src="./img/trash.svg" alt="Done" width="18" height="18">
+                    <img src="./img/trash.svg" alt="Delete" width="18" height="18">
                 </button>
             </div>
         </li>
@@ -56,8 +60,10 @@ function MarkDone(event){
     if (event.target.dataset.action == 'done'){
         const parentNode = event.target.closest('.list-group-item');
         const taskItem = parentNode.querySelector('.task-title');
-        taskItem.classList.toggle('task-title--done');
-    }
+        if (parentNode.childNodes[5].innerHTML == '' ){
+            taskItem.classList.toggle('task-title--done');
+        }
+    }   
 }
 //Удалить все задачи
 function removeAll(event){
@@ -72,5 +78,18 @@ function removeAll(event){
             parentNode.removeChild(parentNode.firstChild);
         }
         parentNode.insertAdjacentHTML("afterbegin", childNode);
+    }
+}
+
+// Пометить задачу, как проваленную 
+function failTask(event){
+    const parentNode = event.target.closest('.list-group-item');
+    const markAsFailed = parentNode.querySelector('.mark-failed');
+    const firstElement = parentNode.childNodes[1];
+    const completeCheck = firstElement.classList.contains('task-title--done');
+    if(event.target.dataset.action == 'failed' && markAsFailed.innerHTML == '' && completeCheck === false){
+        parentNode.querySelector('.mark-failed').append('Провалено');
+    }else if (event.target.dataset.action == 'failed' && markAsFailed.innerHTML == "Провалено" && completeCheck === false){
+        parentNode.querySelector('.mark-failed').innerText = '';    
     }
 }

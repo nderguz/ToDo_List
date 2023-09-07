@@ -21,6 +21,20 @@ body {
 .task-title {
   font-weight: 400;
   padding-top: 5px;
+  width: 15rem;;
+}
+.mark-failed {
+  font-weight: 400;
+  padding-top: 5px;
+  width: 7rem;
+}
+.task-priority{
+  font-weight: 400;
+  padding-top: 5px;
+  width: 11rem;
+}
+span.high{
+  color: red;
 }
 .gray {
   color: #BDBDBD;
