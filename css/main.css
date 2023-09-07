@@ -26,7 +26,7 @@ body {
 .mark-failed {
   font-weight: 400;
   padding-top: 5px;
-  width: 7rem;
+  width: 14rem;
 }
 .task-priority{
   font-weight: 400;
@@ -35,6 +35,12 @@ body {
 }
 span.high{
   color: red;
+}
+span.medium{
+  color:#0069d9;
+}
+span.low{
+  color:#42BE2A;
 }
 .gray {
   color: #BDBDBD;
@@ -75,6 +81,18 @@ span.high{
 .remove-all:hover{
   background-color: #dc3545;
   border-color: #dc3545;
+}
+label{
+  font-weight: 400;
+  font-size: 1.25rem;
+  padding-top: 5px;
+  margin-bottom: 0;
+}
+#selectPriority{
+  font-weight: 400;
+  font-size: 1.25rem;
+  border-radius: 3px;
+  margin-bottom: 0;
 }
 .btn-action {
     background-color: #e0e5ea;

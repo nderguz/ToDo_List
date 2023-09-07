@@ -14,6 +14,21 @@ failedTask.addEventListener("click", failTask);
 //Добавить задачу
 function addNewTask(event){
     event.preventDefault();
+    const eventPriorityName = document.getElementById("selectPriority").value;
+    let eventPriorityStyle;
+
+    switch(eventPriorityName){
+        case "Высокий": 
+            eventPriorityStyle = "high";
+            break;
+        case "Средний": 
+            eventPriorityStyle = "medium";
+            break;
+        case "Низкий": 
+            eventPriorityStyle = "low";
+            break;
+    }
+
     if (taskInput.value == ''){
         alert("Необходимо ввести текст задачи");
         return
@@ -22,7 +37,7 @@ function addNewTask(event){
     const taskElement = `
         <li class="list-group-item d-flex justify-content-between task-item">
             <span class="task-title">${taskName}</span>
-            <span class="task-priority high">Высокий приоритет</span>
+            <span class="task-priority ${eventPriorityStyle}">Приоритет: ${eventPriorityName}</span>
             <span class="mark-failed"></span>
             <div class="task-item__buttons">
                 <button type="button" data-action="done" class="btn-action">
@@ -61,9 +76,14 @@ function MarkDone(event){
         const parentNode = event.target.closest('.list-group-item');
         const taskItem = parentNode.querySelector('.task-title');
         if (parentNode.childNodes[5].innerHTML == '' ){
-            taskItem.classList.toggle('task-title--done');
+            taskItem.classList.add('task-title--done');
+            let cancelDate = new Date();
+            parentNode.querySelector('.mark-failed').append(`Выполнено в ${cancelDate.getHours()}:${cancelDate.getMinutes()} ${cancelDate.getDay()+3}/${cancelDate.getMonth() + 1}/${cancelDate.getFullYear()} `);
+        }else if (parentNode.childNodes[5].innerHTML !== '' ){
+            parentNode.childNodes[5].innerHTML = '' ;
+            taskItem.classList.remove('task-title--done');
         }
-    }   
+    }  
 }
 //Удалить все задачи
 function removeAll(event){
@@ -81,15 +101,16 @@ function removeAll(event){
     }
 }
 
-// Пометить задачу, как проваленную 
+// Пометить задачу, как отмененную
 function failTask(event){
     const parentNode = event.target.closest('.list-group-item');
     const markAsFailed = parentNode.querySelector('.mark-failed');
     const firstElement = parentNode.childNodes[1];
     const completeCheck = firstElement.classList.contains('task-title--done');
+    let cancelDate = new Date();
     if(event.target.dataset.action == 'failed' && markAsFailed.innerHTML == '' && completeCheck === false){
-        parentNode.querySelector('.mark-failed').append('Провалено');
-    }else if (event.target.dataset.action == 'failed' && markAsFailed.innerHTML == "Провалено" && completeCheck === false){
+        parentNode.querySelector('.mark-failed').append(`Отменено в ${cancelDate.getHours()}:${cancelDate.getMinutes()} ${cancelDate.getDay() + 3}/${cancelDate.getMonth() + 1}/${cancelDate.getFullYear()} `);
+    }else if (event.target.dataset.action == 'failed' && markAsFailed.innerHTML !== ''  && completeCheck === false){
         parentNode.querySelector('.mark-failed').innerText = '';    
     }
 }
