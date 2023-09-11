@@ -1,8 +1,8 @@
-const addTask = document.querySelector(".create");
-const clearTasks = document.querySelector(".remove-all");
-const taskInput = document.querySelector("#taskInput");
-const tasksList = document.querySelector("#tasksList");
-const failedTask = document.querySelector("#tasksList");
+const addTask = document.querySelector(".create"),
+    clearTasks = document.querySelector(".remove-all"),
+    taskInput = document.querySelector("#taskInput"),
+    tasksList = document.querySelector("#tasksList"),
+    failedTask = document.querySelector("#tasksList");
 
 
 addTask.addEventListener("click", addNewTask);
@@ -79,9 +79,6 @@ function MarkDone(event){
             taskItem.classList.add('task-title--done');
             let cancelDate = new Date();
             parentNode.querySelector('.mark-failed').append(`Выполнено в ${cancelDate.getHours()}:${cancelDate.getMinutes()} ${cancelDate.getDay()+3}/${cancelDate.getMonth() + 1}/${cancelDate.getFullYear()} `);
-        }else if (parentNode.childNodes[5].innerHTML !== '' ){
-            parentNode.childNodes[5].innerHTML = '' ;
-            taskItem.classList.remove('task-title--done');
         }
     }  
 }
@@ -103,14 +100,18 @@ function removeAll(event){
 
 // Пометить задачу, как отмененную
 function failTask(event){
-    const parentNode = event.target.closest('.list-group-item');
-    const markAsFailed = parentNode.querySelector('.mark-failed');
-    const firstElement = parentNode.childNodes[1];
-    const completeCheck = firstElement.classList.contains('task-title--done');
+    const parentNode = event.target.closest('.list-group-item'),
+        markAsFailed = parentNode.querySelector('.mark-failed'),
+        firstElement = parentNode.childNodes[1],
+        completeCheck = firstElement.classList.contains('task-title--done');
     let cancelDate = new Date();
     if(event.target.dataset.action == 'failed' && markAsFailed.innerHTML == '' && completeCheck === false){
         parentNode.querySelector('.mark-failed').append(`Отменено в ${cancelDate.getHours()}:${cancelDate.getMinutes()} ${cancelDate.getDay() + 3}/${cancelDate.getMonth() + 1}/${cancelDate.getFullYear()} `);
-    }else if (event.target.dataset.action == 'failed' && markAsFailed.innerHTML !== ''  && completeCheck === false){
-        parentNode.querySelector('.mark-failed').innerText = '';    
+        const taskItem = parentNode.querySelector('.task-title');
+        taskItem.classList.add('task-title--done');
     }
 }
+
+
+
+
