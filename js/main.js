@@ -5,39 +5,51 @@ const addTask = document.querySelector(".create"),
     failedTask = document.querySelector("#tasksList");
 
 
+
 addTask.addEventListener("click", addNewTask);
 clearTasks.addEventListener("click", removeAll);
 tasksList.addEventListener("click", removeTask);
 tasksList.addEventListener("click", MarkDone);
-failedTask.addEventListener("click", failTask);
+
+
+
+const ToDoList = Array();
+
 
 //Добавить задачу
 function addNewTask(event){
     event.preventDefault();
-    const eventPriorityName = document.getElementById("selectPriority").value;
+    // Создаем объект с таской
+    const ToDoItem = {};
+    //Записываем имя таски
+    ToDoItem.itemName = taskInput.value
+    //Вычисляем приоритет таски в зависимости от выбранной опции
+    ToDoItem.priority = document.getElementById("selectPriority").value;
     let eventPriorityStyle;
-
-    switch(eventPriorityName){
+    switch(ToDoItem.priority){
         case "Высокий": 
             eventPriorityStyle = "high";
+            ToDoItem.priorityStyle = eventPriorityStyle;
             break;
         case "Средний": 
             eventPriorityStyle = "medium";
+            ToDoItem.priorityStyle = eventPriorityStyle;
             break;
         case "Низкий": 
             eventPriorityStyle = "low";
+            ToDoItem.priorityStyle = eventPriorityStyle;
             break;
     }
-
     if (taskInput.value == ''){
         alert("Необходимо ввести текст задачи");
         return
     }
-    const taskName = taskInput.value;
+    ToDoList.push(ToDoItem);
+
     const taskElement = `
         <li class="list-group-item d-flex justify-content-between task-item">
-            <span class="task-title">${taskName}</span>
-            <span class="task-priority ${eventPriorityStyle}">Приоритет: ${eventPriorityName}</span>
+            <span class="task-title">${ToDoItem.itemName}</span>
+            <span class="task-priority ${eventPriorityStyle}">Приоритет: ${ToDoItem.priority}</span>
             <span class="mark-failed"></span>
             <div class="task-item__buttons">
                 <button type="button" data-action="done" class="btn-action">
@@ -57,9 +69,9 @@ function addNewTask(event){
         const emptyList = document.querySelector("#emptyList");
         emptyList.classList.add('none');
     }
-    
     taskInput.value = "";
 }
+
 // Удалить одну задачу
 function removeTask(event){
     if (event.target.dataset.action == 'delete'){
@@ -97,7 +109,6 @@ function removeAll(event){
         parentNode.insertAdjacentHTML("afterbegin", childNode);
     }
 }
-
 // Пометить задачу, как отмененную
 function failTask(event){
     const parentNode = event.target.closest('.list-group-item'),
