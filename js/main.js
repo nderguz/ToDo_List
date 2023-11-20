@@ -44,10 +44,13 @@ function addNewTask(event){
         alert("Необходимо ввести текст задачи");
         return
     }
-    const date = new Date();
+    const date = "2023-11-20T00:00Z";
     const task = new Task(taskName, date, taskPriority)
     ToDoList.push(task);
-    const taskElement = `
+
+    ToDoList.forEach(function (el){
+        if (el.taskName === taskName) {
+            const taskElement = `
         <li class="list-group-item d-flex justify-content-between task-item">
             <span class="task-title">${task.taskName}</span>
             <span class="task-priority ${eventPriorityStyle}">Приоритет: ${task.taskPriority}</span>
@@ -65,7 +68,11 @@ function addNewTask(event){
             </div>
         </li>
         `;
-        tasksList.insertAdjacentHTML("beforeend", taskElement);
+            tasksList.insertAdjacentHTML("beforeend", taskElement);
+        }else{
+
+        }
+    })
     if (tasksList.childElementCount > 1){
         const emptyList = document.querySelector("#emptyList");
         emptyList.classList.add('none');
