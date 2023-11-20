@@ -2,7 +2,8 @@ const addTask = document.querySelector(".create"),
     clearTasks = document.querySelector(".remove-all"),
     taskInput = document.querySelector("#taskInput"),
     tasksList = document.querySelector("#tasksList"),
-    failedTask = document.querySelector("#tasksList");
+    failedTask = document.querySelector("#tasksList"),
+    emptyList = document.querySelector("#emptyList");
 
 
 
@@ -69,12 +70,9 @@ function addNewTask(event){
         </li>
         `;
             tasksList.insertAdjacentHTML("beforeend", taskElement);
-        }else{
-
-        }
+        }else{}
     })
     if (tasksList.childElementCount > 1){
-        const emptyList = document.querySelector("#emptyList");
         emptyList.classList.add('none');
     }
     taskInput.value = "";
