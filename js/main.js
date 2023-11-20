@@ -11,45 +11,46 @@ clearTasks.addEventListener("click", removeAll);
 tasksList.addEventListener("click", removeTask);
 tasksList.addEventListener("click", MarkDone);
 
-
+class Task{
+    constructor(taskName, taskDate, taskPriority,) {
+        this.taskName = taskName;
+        this.taskDate = taskDate;
+        this.taskPriority = taskPriority;
+    }
+}
 
 const ToDoList = Array();
-
 
 //Добавить задачу
 function addNewTask(event){
     event.preventDefault();
-    // Создаем объект с таской
-    const ToDoItem = {};
     //Записываем имя таски
-    ToDoItem.itemName = taskInput.value
+    const taskName = taskInput.value
     //Вычисляем приоритет таски в зависимости от выбранной опции
-    ToDoItem.priority = document.getElementById("selectPriority").value;
+    const taskPriority = document.getElementById("selectPriority").value
     let eventPriorityStyle;
-    switch(ToDoItem.priority){
+    switch(taskPriority){
         case "Высокий": 
             eventPriorityStyle = "high";
-            ToDoItem.priorityStyle = eventPriorityStyle;
             break;
         case "Средний": 
             eventPriorityStyle = "medium";
-            ToDoItem.priorityStyle = eventPriorityStyle;
             break;
         case "Низкий": 
             eventPriorityStyle = "low";
-            ToDoItem.priorityStyle = eventPriorityStyle;
             break;
     }
     if (taskInput.value == ''){
         alert("Необходимо ввести текст задачи");
         return
     }
-    ToDoList.push(ToDoItem);
-
+    const date = new Date();
+    const task = new Task(taskName, date, taskPriority)
+    ToDoList.push(task);
     const taskElement = `
         <li class="list-group-item d-flex justify-content-between task-item">
-            <span class="task-title">${ToDoItem.itemName}</span>
-            <span class="task-priority ${eventPriorityStyle}">Приоритет: ${ToDoItem.priority}</span>
+            <span class="task-title">${task.taskName}</span>
+            <span class="task-priority ${eventPriorityStyle}">Приоритет: ${task.taskPriority}</span>
             <span class="mark-failed"></span>
             <div class="task-item__buttons">
                 <button type="button" data-action="done" class="btn-action">
@@ -70,6 +71,7 @@ function addNewTask(event){
         emptyList.classList.add('none');
     }
     taskInput.value = "";
+    console.log(ToDoList);
 }
 
 // Удалить одну задачу
